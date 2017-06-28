@@ -2,10 +2,11 @@
 **I need** 
 **So that** 
 
-**Assumptions:**
+## Assumptions:
 
-**Acceptance Criteria:**
-
-**Given** 
-**When**
-**Then** 
+## Acceptance Criteria:
+```
+Given
+When
+Then 
+```
