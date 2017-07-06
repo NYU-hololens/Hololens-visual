@@ -37,12 +37,12 @@ public class AppServiceUIScript : MonoBehaviour
 
     public void CallUpdateForAndroid()
     {
-        EasyAPIsClient.Instance.CallAPIMultiple<Highscore, Highscore>("UpdateHighScore", HttpMethod.Post, response =>
+        EasyAPIsClient.Instance.CallAPIMultiple<TableA, TableA>("UpdateTableA", HttpMethod.Post, response =>
         {
             if (response.Status == CallBackResult.Success)
             {
-                Highscore obj = response.Result[0];
-                string result = string.Format("new highscore is {0} and name is {1}", obj.score, obj.playername);
+                TableA obj = response.Result[0];
+                string result = string.Format("new highscore is {0} and name is {1}", obj.score, obj.Name);
                 Debug.Log(result);
                 StatusText.text = result;
             }
@@ -51,7 +51,7 @@ public class AppServiceUIScript : MonoBehaviour
                 ShowError(response.Exception.Message);
             }
         },
-        new Highscore() { id = "ecca86cb-8e35-47ac-8eef-74dc2ef87faa", playername="Dimitris", score=33 });
+        new TableA() { id = "ecca86cb-8e35-47ac-8eef-74dc2ef87faa", Name="Dimitris", score=33 });
         StatusText.text = "Loading...";
     }
 
@@ -120,11 +120,18 @@ public class AppServiceUIScript : MonoBehaviour
     #endregion
 
     #region Easy Tables
-
+	public static string GetName()
+	{
+		int num = UnityEngine.Random.Range (0, 26);
+		char[] letters = {(char)('A' + num)}; 
+		// letters[0] = (char)('A' + num);
+		string return_str = new string(letters);
+		return return_str;
+	}
     public void Insert()
-    {
-        Highscore score = new Highscore();
-        score.playername = "dimitris";
+	{
+        TableA score = new TableA();
+		score.Name = GetName();
         score.score = UnityEngine.Random.Range(10,100);
         EasyTablesClient.Instance.Insert(score, insertResponse =>
         {
@@ -142,32 +149,55 @@ public class AppServiceUIScript : MonoBehaviour
         StatusText.text = "Loading...";
     }
 
+	public void Insert2()
+	{
+		TableB score = new TableB();
+		score.Name = GetName();
+		score.score = UnityEngine.Random.Range(10,100);
+		EasyTablesClient.Instance.Insert(score, insertResponse =>
+			{
+				if (insertResponse.Status == CallBackResult.Success)
+				{
+					string result = "Insert completed";
+					if (Globals.DebugFlag) Debug.Log(result);
+					StatusText.text = result;
+				}
+				else
+				{
+					ShowError(insertResponse.Exception.Message);
+				}
+			});
+		StatusText.text = "Loading...";
+	}
+
     public void SelectFiltered()
     {
-        SelectFilteredExecute(false);
+		SelectFilteredExecute("score gt 50", false);
     }
 
     public void SelectFilteredCount()
     {
-        SelectFilteredExecute(true);
+		SelectFilteredExecute("score gt 50", true);
     }
 
-    private void SelectFilteredExecute(bool includeTotalCount)
+    private void SelectFilteredExecute(string filterquery, bool includeTotalCount)
     {
-        string filterquery = "score gt 50 and startswith(playername,'dimi')";
-
+		if (filterquery==null)
+		{
+			filterquery = "score gt 50 and startswith(Name,'A')";
+		}
         TableQuery tq = new TableQuery();
         tq.filter = filterquery;
         tq.orderBy = "score";
         tq.inlineCount = includeTotalCount;
 
-        EasyTablesClient.Instance.SelectFiltered<Highscore>(tq, x =>
+        EasyTablesClient.Instance.SelectFiltered<TableA>(tq, x =>
         {
             if (x.Status == CallBackResult.Success)
             {
                 foreach (var item in x.Result.results)
                 {
-                    if (Globals.DebugFlag) Debug.Log(string.Format("ID is {0},score is {1},name is {2}", item.id, item.score, item.playername ));
+                    if (Globals.DebugFlag) Debug.Log(string.Format("ID is {0},score is {1},name is {2}", item.id, item.score, item.Name ));
                 }
                 if (includeTotalCount)
                 {
@@ -186,17 +216,56 @@ public class AppServiceUIScript : MonoBehaviour
         StatusText.text = "Loading...";
     }
 
+	private void SelectCount(string orderBy, string filterquery, uint top)
+	{
+		TableQuery tq = new TableQuery();
+		if (orderBy == null)
+		{
+			tq.orderBy = "createdAt";
+		}
 
+		if (filterquery != null) 
+		{
+			tq.filter = filterquery;
+		}
+		tq.inlineCount = true;
+		tq.top = top;
+		bool includeTotalCount = true;
+
+		EasyTablesClient.Instance.SelectCount<TableA>(tq, x =>
+			{
+				if (x.Status == CallBackResult.Success)
+				{
+					foreach (var item in x.Result.results)
+					{
+						if (Globals.DebugFlag) Debug.Log(string.Format("ID is {0},score is {1},name is {2}", item.id, item.score, item.Name ));
+					}
+					if (includeTotalCount)
+					{
+						StatusText.text = string.Format("Brought {0} rows out of {1}", x.Result.results.Count(), x.Result.count);
+					}
+					else
+					{
+						StatusText.text = string.Format("Brought {0} rows", x.Result.results.Count());
+					}
+				}
+				else
+				{
+					ShowError(x.Exception.Message);
+				}
+			});
+		StatusText.text = "Loading...";
+	}
 
     public void SelectByID()
     {
-        EasyTablesClient.Instance.SelectByID<Highscore>("ecca86cb-8e35-47ac-8eef-74dc2ef87faa", x =>
+        EasyTablesClient.Instance.SelectByID<TableA>("ecca86cb-8e35-47ac-8eef-74dc2ef87faa", x =>
         {
             if (x.Status == CallBackResult.Success)
             {
-                Highscore hs = x.Result;
+                TableA hs = x.Result;
                 if (Globals.DebugFlag) Debug.Log(hs.score);
-                StatusText.text = "score of selected Highscore entry is " + hs.score;
+                StatusText.text = "score of selected TableA entry is " + hs.score;
             }
             else
             {
@@ -217,11 +286,11 @@ public class AppServiceUIScript : MonoBehaviour
         else
         {
 
-            EasyTablesClient.Instance.SelectByID<Highscore>("bbd01bc4-52db-407d-83a4-d8b5422e300f", selectResponse =>
+            EasyTablesClient.Instance.SelectByID<TableA>("bbd01bc4-52db-407d-83a4-d8b5422e300f", selectResponse =>
             {
                 if (selectResponse.Status == CallBackResult.Success)
                 {
-                    Highscore hs = selectResponse.Result;
+                    TableA hs = selectResponse.Result;
                     hs.score += 1;
                     EasyTablesClient.Instance.UpdateObject(hs, updateResponse =>
                     {
@@ -248,12 +317,12 @@ public class AppServiceUIScript : MonoBehaviour
 
     public void DeleteByID()
     {
-        EasyTablesClient.Instance.SelectByID<Highscore>("bbd01bc4-52db-407d-83a4-d8b5422e300f", selectResponse =>
+        EasyTablesClient.Instance.SelectByID<TableA>("bbd01bc4-52db-407d-83a4-d8b5422e300f", selectResponse =>
         {
             if (selectResponse.Status == CallBackResult.Success)
             {
-                Highscore hs = selectResponse.Result;
-                EasyTablesClient.Instance.DeleteByID<Highscore>(hs.id, deleteResponse =>
+                TableA hs = selectResponse.Result;
+                EasyTablesClient.Instance.DeleteByID<TableA>(hs.id, deleteResponse =>
                 {
                     if (deleteResponse.Status == CallBackResult.Success)
                     {
@@ -274,6 +343,51 @@ public class AppServiceUIScript : MonoBehaviour
         });
         StatusText.text = "Loading...";
     }
+
+	/*
+	public void Delete2(string orderBy, string filterquery, uint top)
+	{
+		TableQuery tq = new TableQuery();
+		if (orderBy == null)
+		{
+			tq.orderBy = "createdAt";
+		}
+
+		if (filterquery != null) 
+		{
+			tq.filter = filterquery;
+		}
+		tq.inlineCount = true;
+		tq.top = top;
+		bool includeTotalCount = true;
+		EasyTablesClient.Instance.SelectCount<TableA>(tq, selectResponse =>
+			{
+				if (selectResponse.Status == CallBackResult.Success)
+				{
+					//TableA hs = selectResponse.;
+					SelectFilteredResult<TableA> hs = selectResponse.Result;
+					EasyTablesClient.Instance.DeleteByID<TableA>(hs.id, deleteResponse =>
+						{
+							if (deleteResponse.Status == CallBackResult.Success)
+							{
+								string msg = "successfully deleted ID = " + hs.id;
+								if (Globals.DebugFlag) Debug.Log(msg);
+								StatusText.text = msg;
+							}
+							else
+							{
+								ShowError(deleteResponse.Exception.Message);
+							}
+						});
+				}
+				else
+				{
+					ShowError(selectResponse.Exception.Message);
+				}
+			});
+		StatusText.text = "Loading...";
+	}
+	*/
 }
 
 #endregion
@@ -281,10 +395,18 @@ public class AppServiceUIScript : MonoBehaviour
 
 //Helper class for Easy Tables
 [Serializable()]
-public class Highscore : AppServiceObjectBase
+public class TableA : AppServiceObjectBase
 {
     public int score;
-    public string playername;
+    public string Name;
+}
+
+//Helper class for Easy Tables
+[Serializable()]
+public class TableB : AppServiceObjectBase
+{
+	public int score;
+	public string Name;
 }
 
 //Helper class for Easy APIs

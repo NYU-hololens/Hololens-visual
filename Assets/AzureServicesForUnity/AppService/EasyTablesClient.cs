@@ -42,6 +42,13 @@ namespace AzureServicesForUnity.AppService
             StartCoroutine(SelectFilteredInternal(query, onSelectCompleted));
         }
 
+		public void SelectCount<T>(TableQuery query, Action<CallbackResponse<SelectFilteredResult<T>>> onSelectCompleted)
+			where T : AppServiceObjectBase
+		{
+			Utilities.ValidateForNull(onSelectCompleted); //query can be null
+			StartCoroutine(SelectCountInternal(query, onSelectCompleted));
+		}
+
         public void SelectByID<T>(string id, Action<CallbackResponse<T>> onSelectByIDCompleted)
             where T : AppServiceObjectBase
         {
@@ -60,7 +67,7 @@ namespace AzureServicesForUnity.AppService
             where T : AppServiceObjectBase
         {
             Utilities.ValidateForNull(id, onDeleteCompleted);
-            StartCoroutine(DeleteByIDInternal<Highscore>(id, onDeleteCompleted));
+            StartCoroutine(DeleteByIDInternal<TableA>(id, onDeleteCompleted));
         }
 
         #endregion
@@ -216,6 +223,63 @@ namespace AzureServicesForUnity.AppService
                 onSelectCompleted(response);
             }
         }
+
+		private IEnumerator SelectCountInternal<T>(TableQuery query,
+			Action<CallbackResponse<SelectFilteredResult<T>>> onSelectCompleted)
+			where T : AppServiceObjectBase
+		{
+			string url = GetEasyTablesUrl<T>();
+			if (query != null)
+			{
+				url += query.ToString();
+			}
+			if (Globals.DebugFlag) Debug.Log(url);
+			using (UnityWebRequest www = AppServiceUtilities.BuildAppServiceWebRequest(url,
+				HttpMethod.Get.ToString(), null, AuthenticationToken))
+			{
+				yield return www.Send();
+				if (Globals.DebugFlag) Debug.Log(www.responseCode);
+
+				CallbackResponse<SelectFilteredResult<T>> response = new CallbackResponse<SelectFilteredResult<T>>();
+
+				if (Utilities.IsWWWError(www))
+				{
+					if (Globals.DebugFlag) Debug.Log(www.error);
+					Utilities.BuildResponseObjectOnFailure(response, www);
+				}
+				else
+				{
+					try
+					{
+						response.Status = CallBackResult.Success;
+
+						//reported issue when fetching many rows
+						string textResponse = www.downloadHandler.text.Replace("\n", "");
+
+						//reported issue on macOS
+						if (textResponse.Trim() == string.Empty)
+							throw new Exception("downloadHandler is empty");
+
+						SelectFilteredResult<T> selectFilteredResult = null;
+						if (query.inlineCount)
+							selectFilteredResult = JsonUtility.FromJson<SelectFilteredResult<T>>(textResponse);
+						else
+						{
+							selectFilteredResult = new SelectFilteredResult<T>();
+							T[] data = JsonHelper.GetJsonArray<T>(www.downloadHandler.text);
+							selectFilteredResult.results = data;
+							selectFilteredResult.count = -1;
+						}
+						response.Result = selectFilteredResult;
+					}
+					catch (Exception ex)
+					{
+						Utilities.BuildResponseObjectOnException(response, ex);
+					}
+				}
+				onSelectCompleted(response);
+			}
+		}
 
         private IEnumerator UpdateInternal<T>(T instance, Action<CallbackResponse<T>> onUpdateCompleted)
            where T : AppServiceObjectBase

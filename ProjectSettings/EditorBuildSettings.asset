@@ -7,3 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/DemoScene.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/AzureServicesForUnity/_Demo Scenes/AppServiceDemo.unity
+    guid: 3f926d9339062b948bff0e9a772b10bb
