@@ -52,6 +52,8 @@
      <Compile Include="Assets\AzureServicesForUnity\AppService\EasyAPIsClient.cs" />
      <Compile Include="Assets\AzureServicesForUnity\AppService\EasyTablesClient.cs" />
      <Compile Include="Assets\AzureServicesForUnity\AppService\SelectFilteredResult.cs" />
+     <Compile Include="Assets\AzureServicesForUnity\EventHub\EventHubClient.cs" />
+     <Compile Include="Assets\AzureServicesForUnity\EventHub\EventHubUtilities.cs" />
      <Compile Include="Assets\AzureServicesForUnity\ObjectScript\TableScript1.cs" />
      <Compile Include="Assets\AzureServicesForUnity\ObjectScript\TableScript2.cs" />
      <Compile Include="Assets\AzureServicesForUnity\Shared\AuthenticationUtility.cs" />
@@ -60,6 +62,9 @@
      <Compile Include="Assets\AzureServicesForUnity\Shared\JsonHelper.cs" />
      <Compile Include="Assets\AzureServicesForUnity\Shared\TableQuery.cs" />
      <Compile Include="Assets\AzureServicesForUnity\Shared\Utilities.cs" />
+     <Compile Include="Assets\AzureServicesForUnity\Storage\StorageUtilities.cs" />
+     <Compile Include="Assets\AzureServicesForUnity\Storage\TableEntity.cs" />
+     <Compile Include="Assets\AzureServicesForUnity\Storage\TableStorageClient.cs" />
      <Compile Include="Assets\AzureServicesForUnity\_Demo Scenes\AppServiceUIScript.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
