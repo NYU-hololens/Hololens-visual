@@ -66,6 +66,7 @@ namespace Academy.HoloToolkit.Unity
             if (GazeManager.Instance.Hit)
             {
                 CursorOnHolograms.SetActive(true);
+                gameObject.transform.rotation = Quaternion.FromToRotation(new Vector3(0,1,0), GazeManager.Instance.Normal);
                 CursorOffHolograms.SetActive(false);
             }
             else
@@ -76,6 +77,7 @@ namespace Academy.HoloToolkit.Unity
 
             // Place the cursor at the calculated position.
             gameObject.transform.position = GazeManager.Instance.Position;
+            
 
             // Reorient the cursors to match the hit object normal.
             CursorOnHolograms.transform.parent.transform.up = GazeManager.Instance.Normal;
