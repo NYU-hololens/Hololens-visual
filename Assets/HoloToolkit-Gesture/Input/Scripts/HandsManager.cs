@@ -63,13 +63,15 @@ namespace Academy.HoloToolkit.Unity
 
         private void InteractionManager_SourceDetected(InteractionSourceState hand)
         {
+            //CursorManager.Instance.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+            
             HandDetected = true;
         }
 
         private void InteractionManager_SourceLost(InteractionSourceState hand)
         {
             HandDetected = false;
-
+            //CursorManager.Instance.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
             // 2.a: Reset FocusedGameObject.
             ResetFocusedGameObject();
         }
@@ -85,7 +87,7 @@ namespace Academy.HoloToolkit.Unity
                 {
                     audioSource.Play();
                 }
-
+                //CursorManager.Instance.CursorOnHolograms.GetComponent<MeshRenderer>().material.color = Color.green;
                 // 2.a: Cache InteractibleManager's FocusedGameObject in FocusedGameObject.
                 FocusedGameObject = InteractibleManager.Instance.FocusedGameObject;
             }
