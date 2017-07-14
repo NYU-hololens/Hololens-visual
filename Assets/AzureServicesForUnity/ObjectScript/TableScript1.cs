@@ -9,11 +9,6 @@ public class TableScript1 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update (){
 		string filterquery = null;
 		bool includeTotalCount = true;
 		TableQuery tq = new TableQuery();
@@ -48,4 +43,9 @@ public class TableScript1 : MonoBehaviour {
 		// StatusText.text = "Loading...";
 
 	}
+
+	
+	// Update is called once per frame
+	void Update (){
+	}	
 }
