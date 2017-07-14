@@ -8,7 +8,7 @@ namespace Academy.HoloToolkit.Unity
     public class GazeManager : Singleton<GazeManager>
     {
         [Tooltip("Maximum gaze distance for calculating a hit.")]
-        public float MaxGazeDistance = 100.0f;
+        public float MaxGazeDistance = 1000000000.0f;
 
         [Tooltip("Select the layers raycast should target.")]
         public LayerMask RaycastLayerMask = Physics.DefaultRaycastLayers;
