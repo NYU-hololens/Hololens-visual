@@ -7,6 +7,8 @@ using AzureServicesForUnity.AppService;
 
 public class TableScript2 : MonoBehaviour {
 
+	public int row=25;
+	public int column=7;
 	// Use this for initialization
 	void Start () {
 		string filterquery = null;

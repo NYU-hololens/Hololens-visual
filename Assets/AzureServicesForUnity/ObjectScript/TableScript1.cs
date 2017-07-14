@@ -8,6 +8,9 @@ using AzureServicesForUnity.AppService;
 public class TableScript1 : MonoBehaviour {
 
 	// Use this for initialization
+	public int row=15;
+	public int column=5;
+
 	void Start () {
 		string filterquery = null;
 		bool includeTotalCount = true;

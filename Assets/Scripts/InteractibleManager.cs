@@ -1,5 +1,8 @@
 ﻿using Academy.HoloToolkit.Unity;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
 
 /// <summary>
 /// InteractibleManager keeps tracks of which GameObject
@@ -8,6 +11,9 @@ using UnityEngine;
 public class InteractibleManager : Singleton<InteractibleManager>
 {
     public GameObject FocusedGameObject { get; private set; }
+	public Text ObjectName;
+	public Text col;
+	public Text row;
 
     private GameObject oldFocusedGameObject = null;
 
@@ -26,6 +32,16 @@ public class InteractibleManager : Singleton<InteractibleManager>
             if (hitInfo.collider != null)
             {
                 FocusedGameObject = hitInfo.collider.gameObject;
+				ObjectName.text = FocusedGameObject.name;
+				if (ObjectName.text.Equals ("SphereTable1")) {
+					row.text = FocusedGameObject.GetComponent<TableScript1>().row.ToString();
+					col.text = FocusedGameObject.GetComponent<TableScript1>().column.ToString();
+				}
+				else if (ObjectName.text.Equals ("SphereTable2")) {
+					row.text = FocusedGameObject.GetComponent<TableScript2>().row.ToString();
+					col.text = FocusedGameObject.GetComponent<TableScript2>().column.ToString();
+				}
+
             }
             else
             {
@@ -34,6 +50,10 @@ public class InteractibleManager : Singleton<InteractibleManager>
         }
         else
         {
+			ObjectName.text = "null";
+			col.text = "";
+			row.text = "";
+	
             FocusedGameObject = null;
         }
 
