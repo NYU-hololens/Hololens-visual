@@ -72,16 +72,17 @@ public class LoadTableData : MonoBehaviour
             {
                 //Add GameObjects template in Prefab and load from there
                 case "String":
-                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    gameObj.GetComponent<Renderer>().material.color = Color.red;
+                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
+                    //gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    //gameObj.GetComponent<Renderer>().material.color = Color.red;
                     break;
+
                 case "DateTime":
-                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    gameObj.GetComponent<Renderer>().material.color = Color.blue;
+                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
                     break;
+
                 case "Int":
-                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    gameObj.GetComponent<Renderer>().material.color = Color.green;
+                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
                     break;
 
                 default:
@@ -89,6 +90,7 @@ public class LoadTableData : MonoBehaviour
                     break;
             }
 
+            gameObj.transform.Find("ColumnNameText").GetComponent<TextMesh>().text = item.ColumnName;
             gameObj.transform.position = new Vector3(ObjXcoor, ObjYcoor, ObjZcoor);
             ObjYcoor += 0.4f;
 
