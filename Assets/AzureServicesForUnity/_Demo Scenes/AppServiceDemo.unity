@@ -3908,6 +3908,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   row: 25
   column: 7
+--- !u!114 &2071981760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071981753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f183c196d7b0c44946e38295dbae31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToTagAlong: {fileID: 1399482367914586, guid: 97d739dfb3bff4544a7cb396d31efcf2,
+    type: 2}
 --- !u!1 &2135218278
 GameObject:
   m_ObjectHideFlags: 0
