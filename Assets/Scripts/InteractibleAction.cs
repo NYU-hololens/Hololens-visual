@@ -27,8 +27,8 @@ public class InteractibleAction : MonoBehaviour
 
         instantiatedObjectToTagAlong.SetActive(true);
 
-        instantiatedObjectToTagAlong.AddComponent<Billboard>();
+        //instantiatedObjectToTagAlong.AddComponent<Billboard>();
 
-        instantiatedObjectToTagAlong.AddComponent<SimpleTagalong>();
+        //instantiatedObjectToTagAlong.AddComponent<SimpleTagalong>();
    }
 }

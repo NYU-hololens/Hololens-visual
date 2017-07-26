@@ -12,7 +12,7 @@ public class DismissOnSelect : MonoBehaviour
 
     void OnSelect()
     {
-        EnableAudioHapticFeedback();
+        //EnableAudioHapticFeedback();
 
         Destroy(this.gameObject);
         if (audioGameObject != null)
