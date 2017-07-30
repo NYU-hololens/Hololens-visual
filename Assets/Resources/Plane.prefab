@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33417222189915888}
   - component: {fileID: 65045679575164640}
   - component: {fileID: 23157647879758802}
-  - component: {fileID: 114906900345033352}
+  - component: {fileID: 114281231349665652}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Detail
@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1950098167345508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 0.841, z: 4.385}
-  m_LocalScale: {x: 1.5, y: 1, z: 0.01}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.2, z: 0.001}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,7 +94,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114906900345033352
+--- !u!114 &114281231349665652
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -102,7 +102,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1950098167345508}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a506ac93c61234441ad3882787ec82f8, type: 3}
+  m_Script: {fileID: 11500000, guid: f92cee4554fd56248a4a4786afc5ceaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetFeedbackSound: {fileID: 8300000, guid: 026ad6633e9b4e9408dfce89dfb4b16d, type: 3}
