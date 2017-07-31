@@ -1,6 +1,63 @@
 use CitiHoloDB;
 
+--Table - 1
+CREATE TABLE [dbo].[FL_insurance_sample_2] (
+[policyID] varchar(50) NOT NULL PRIMARY KEY,
+[statecode] varchar(50),
+[county] varchar(50),
+[eq_site_limit] varchar(50),
+[hu_site_limit] varchar(50),
+[fl_site_limit] varchar(50),
+[fr_site_limit] varchar(50),
+[tiv_2011] varchar(50),
+[tiv_2012] varchar(50),
+[eq_site_deductible] varchar(50),
+[hu_site_deductible] varchar(50),
+[fl_site_deductible] varchar(50),
+[fr_site_deductible] varchar(50),
+[point_latitude] varchar(50),
+[point_longitude] varchar(50),
+[line] varchar(50),
+[construction] varchar(50),
+[point_granularity] int
+)
 
+
+--Table 2
+CREATE TABLE [dbo].[FL_insurance_sample_1] (
+[policyID] varchar(50) NOT NULL FOREIGN KEY REFERENCES [dbo].[FL_insurance_sample_2]([policyID] ),
+[statecode] varchar(50),
+[county] varchar(50),
+[tiv_2011] float,
+[tiv_2012] float,
+[fl_site_deductible] float,
+[fr_site_deductible] float,
+[point_latitude] decimal(38,0),
+[point_longitude] decimal(38,0),
+[construction] varchar(50),
+[point_granularity] int
+)
+
+
+
+--Datetime columns added to both tthe tables
+
+ALTER TABLE dbo.FL_insurance_sample_1 
+ADD  Created_At DATETIME NOT NULL DEFAULT '2011-01-26 14:30:00'  ;
+
+ALTER TABLE dbo.FL_insurance_sample_1 
+ADD  Valid_Until DATETIME NOT NULL DEFAULT '2017-01-26 14:30:00'  ;
+
+
+ALTER TABLE dbo.FL_insurance_sample_2
+ADD  Created_At DATETIME NOT NULL DEFAULT '2011-01-26 14:30:00'  ;
+
+ALTER TABLE dbo.FL_insurance_sample_2
+ADD  Valid_Until DATETIME NOT NULL DEFAULT '2017-01-26 14:30:00'  ;
+
+
+
+--Procedures
 GO
 
 CREATE PROCEDURE dbo.uspGetsampledata1
