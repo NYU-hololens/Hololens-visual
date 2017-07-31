@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+using System.Collections;
+using ChartAndGraph;
+
+public class BarChartFeed : MonoBehaviour {
+	void Start () {
+        BarChart barChart = GetComponent<BarChart>();
+        if (barChart != null)
+        {
+            // barChart.DataSource.SetValue("Player 1", "Value 1", Random.value * 50);
+			barChart.DataSource.SetValue("Player1", "Value1", 50);
+			barChart.DataSource.SetValue("Player2", "Value1", 20);
+			barChart.DataSource.SetValue("Player3", "Value1", 30);
+			barChart.DataSource.SetValue("avg_t", "Value1", 40);
+			// barChart.DataSource.SlideValue("Player 2", "Value 1", Random.value * 20, 40f);
+			barChart.DataSource.SlideValue("Player2", "Value1", 40, 40f);
+        }
+    }
+    private void Update()
+    {
+    }
+}
