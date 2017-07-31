@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - SphereTable1
+  - TagAlong
+  - Detail
   layers:
   - Default
   - TransparentFX
