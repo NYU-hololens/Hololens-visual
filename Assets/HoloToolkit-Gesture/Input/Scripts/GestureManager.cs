@@ -35,7 +35,7 @@ namespace Academy.HoloToolkit.Unity
                 GestureSettings.NavigationX);
 
             // 2.b: Register for the TappedEvent with the NavigationRecognizer_TappedEvent function.
-            NavigationRecognizer.TappedEvent += NavigationRecognizer_TappedEvent;
+            //NavigationRecognizer.TappedEvent += NavigationRecognizer_TappedEvent;
             // 2.b: Register for the NavigationStartedEvent with the NavigationRecognizer_NavigationStartedEvent function.
             NavigationRecognizer.NavigationStartedEvent += NavigationRecognizer_NavigationStartedEvent;
             // 2.b: Register for the NavigationUpdatedEvent with the NavigationRecognizer_NavigationUpdatedEvent function.
@@ -49,7 +49,7 @@ namespace Academy.HoloToolkit.Unity
             ManipulationRecognizer = new GestureRecognizer();
 
             // Add the ManipulationTranslate GestureSetting to the ManipulationRecognizer's RecognizableGestures.
-            ManipulationRecognizer.SetRecognizableGestures(
+            ManipulationRecognizer.SetRecognizableGestures(GestureSettings.Tap |
                 GestureSettings.ManipulationTranslate);
 
             // Register for the Manipulation events on the ManipulationRecognizer.
@@ -57,14 +57,14 @@ namespace Academy.HoloToolkit.Unity
             ManipulationRecognizer.ManipulationUpdatedEvent += ManipulationRecognizer_ManipulationUpdatedEvent;
             ManipulationRecognizer.ManipulationCompletedEvent += ManipulationRecognizer_ManipulationCompletedEvent;
             ManipulationRecognizer.ManipulationCanceledEvent += ManipulationRecognizer_ManipulationCanceledEvent;
-
+            ManipulationRecognizer.TappedEvent += ManipulationRecognizer_TappedEvent;
             ResetGestureRecognizers();
         }
 
         void OnDestroy()
         {
             // 2.b: Unregister the Tapped and Navigation events on the NavigationRecognizer.
-            NavigationRecognizer.TappedEvent -= NavigationRecognizer_TappedEvent;
+            //NavigationRecognizer.TappedEvent -= NavigationRecognizer_TappedEvent;
 
             NavigationRecognizer.NavigationStartedEvent -= NavigationRecognizer_NavigationStartedEvent;
             NavigationRecognizer.NavigationUpdatedEvent -= NavigationRecognizer_NavigationUpdatedEvent;
@@ -76,6 +76,7 @@ namespace Academy.HoloToolkit.Unity
             ManipulationRecognizer.ManipulationUpdatedEvent -= ManipulationRecognizer_ManipulationUpdatedEvent;
             ManipulationRecognizer.ManipulationCompletedEvent -= ManipulationRecognizer_ManipulationCompletedEvent;
             ManipulationRecognizer.ManipulationCanceledEvent -= ManipulationRecognizer_ManipulationCanceledEvent;
+            ManipulationRecognizer.TappedEvent -= ManipulationRecognizer_TappedEvent;
         }
 
         /// <summary>
@@ -177,13 +178,23 @@ namespace Academy.HoloToolkit.Unity
             IsManipulating = false;
         }
 
-        private void NavigationRecognizer_TappedEvent(InteractionSourceKind source, int tapCount, Ray ray)
+        private void ManipulationRecognizer_TappedEvent(InteractionSourceKind source, int tapCount, Ray ray)
         {
-            GameObject focusedObject = InteractibleManager.Instance.FocusedGameObject;
+            /*GameObject focusedObject = InteractibleManager.Instance.FocusedGameObject;
 
             if (focusedObject != null)
             {
                 focusedObject.SendMessageUpwards("OnSelect");
+            }*/
+            OnTap();
+        }
+
+        private void OnTap()
+        {
+            GameObject focusedObject = InteractibleManager.Instance.FocusedGameObject;
+            if (focusedObject != null)
+            {
+                focusedObject.SendMessage("OnTap");
             }
         }
     }

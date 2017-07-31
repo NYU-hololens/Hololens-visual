@@ -10,11 +10,11 @@ public class Interactible : MonoBehaviour
     public AudioClip TargetFeedbackSound;
     private AudioSource audioSource;
 
-    private Material[] defaultMaterials;
+    //private Material[] defaultMaterials;
 
     void Start()
     {
-        defaultMaterials = GetComponent<Renderer>().materials;
+        //defaultMaterials = GetComponent<Renderer>().materials;
 
         // Add a BoxCollider if the interactible does not contain one.
         Collider collider = GetComponentInChildren<Collider>();
@@ -23,7 +23,7 @@ public class Interactible : MonoBehaviour
             gameObject.AddComponent<BoxCollider>();
         }
 
-        EnableAudioHapticFeedback();
+        //EnableAudioHapticFeedback();
     }
 
     private void EnableAudioHapticFeedback()
@@ -46,23 +46,25 @@ public class Interactible : MonoBehaviour
 
     void GazeEntered()
     {
-        for (int i = 0; i < defaultMaterials.Length; i++)
+        /*for (int i = 0; i < defaultMaterials.Length; i++)
         {
             defaultMaterials[i].SetFloat("_Highlight", .25f);
         }
+        */
     }
 
     void GazeExited()
     {
-        for (int i = 0; i < defaultMaterials.Length; i++)
+        /*for (int i = 0; i < defaultMaterials.Length; i++)
         {
             defaultMaterials[i].SetFloat("_Highlight", 0f);
         }
+        */
     }
 
     void OnSelect()
     {
-        for (int i = 0; i < defaultMaterials.Length; i++)
+        /*for (int i = 0; i < defaultMaterials.Length; i++)
         {
             defaultMaterials[i].SetFloat("_Highlight", .5f);
         }
@@ -72,7 +74,7 @@ public class Interactible : MonoBehaviour
         {
             audioSource.Play();
         }
-
+        */
         this.SendMessage("PerformTagAlong");
     }
 }
