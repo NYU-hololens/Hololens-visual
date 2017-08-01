@@ -16,7 +16,7 @@ namespace ChartAndGraph
 
             for (int i = 0; i < str.Length; i++)
             {
-                if (!(char.IsLetter(str[i])) && (!(char.IsNumber(str[i]))) && str[i] != ' ')
+				if (!(char.IsLetter(str[i])) && (!(char.IsNumber(str[i]))) && str[i] != ' ' && str[i] != '_')
                     return false;
             }
 
