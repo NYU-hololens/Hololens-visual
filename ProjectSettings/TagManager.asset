@@ -7,6 +7,7 @@ TagManager:
   - SphereTable1
   - TagAlong
   - Detail
+  - BarGraph
   layers:
   - Default
   - TransparentFX

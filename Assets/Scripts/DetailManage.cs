@@ -25,7 +25,7 @@ public class DetailManage : MonoBehaviour
         }
 
         // Recommend having only one tagalong.
-        GameObject existingDetail = GameObject.FindGameObjectWithTag("Detail");
+        GameObject existingDetail = GameObject.FindGameObjectWithTag("BarGraph");
         if (existingDetail != null)
         {
             //existingDetail.SetActive(false);
@@ -47,7 +47,7 @@ public class DetailManage : MonoBehaviour
 
     public void Dismiss()
     {
-        GameObject existingDetail = GameObject.FindGameObjectWithTag("Detail");
+        GameObject existingDetail = GameObject.FindGameObjectWithTag("BarGraph");
         if (existingDetail != null)
         {
             existingDetail.SetActive(false);
