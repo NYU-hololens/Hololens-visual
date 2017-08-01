@@ -673,17 +673,17 @@ PlayerSettings:
   cloudServicesEnabled:
     Analytics: 0
     Build: 0
-    Collab: 1
+    Collab: 0
     ErrorHub: 0
     Game_Performance: 0
     Hub: 0
     Purchasing: 0
-    UNet: 0
+    UNet: 1
     Unity_Ads: 0
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
-  cloudProjectId: 14c7db28-7444-4af9-a41f-b643b2046847
+  cloudProjectId: bfdbe886-2307-4f00-bdfb-851b496e4f9d
   projectName: UnityServicesDemo
-  organizationId: justqurious
+  organizationId: quintoben
   cloudEnabled: 0
   enableNewInputSystem: 0
