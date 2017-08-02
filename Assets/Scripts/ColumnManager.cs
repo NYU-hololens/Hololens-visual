@@ -47,6 +47,7 @@ public class ColumnManager : MonoBehaviour, IInputClickHandler
         }
         highlight = true;
         //add the column name to the SelectedColumnInfo
+		SelectedColumnInfo.setLastColumnName(tableName, columnName);
         SelectedColumnInfo.addColumnName(tableName, columnName);
         Debug.Log(tableName + " " + columnName + " add " + SelectedColumnInfo.getColumnNameSet(tableName).Count);
         Debug.Log("Column name in set");

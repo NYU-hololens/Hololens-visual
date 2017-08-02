@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using Academy.HoloToolkit.Unity;
 
-public class BarChartManager : MonoBehaviour
+public class BarChartManage : MonoBehaviour
 {
     public GameObject Detail;
     // Use this for initialization

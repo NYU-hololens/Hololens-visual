@@ -9,10 +9,7 @@ using ChartAndGraph;
 // It is not what we planned for the uniq count chart as that data should be pulled from the DB directly
 public class BarChartLogic : MonoBehaviour {
 	public Material mDefaultMaterial;
-	// TODO: Remove this once we have a DB working
-	private string[] col_name = new string[]{
-		"policyID,statecode,county,eq_site_limit,hu_site_limit,fl_site_limit,fr_site_limit,tiv_2011,tiv_2012,eq_site_deductible,hu_site_deductible,fl_site_deductible," +
-		"fr_site_deductible,point_latitude,point_longitude,line,construction,point_granularity"};
+
 	public string key;
 	public string value;
 	// List<Dictionary<string,object>> finalData;
