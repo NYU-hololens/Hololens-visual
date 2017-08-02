@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using HoloToolkit.Unity.InputModule;
 
 /// <summary>
