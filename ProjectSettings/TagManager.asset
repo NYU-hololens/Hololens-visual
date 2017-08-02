@@ -9,6 +9,10 @@ TagManager:
   - Detail
   - Toggle
   - BarChart
+  - GraphChart
+  - BarChartManager
+  - BubbleChart
+  - GraphChartManager
   layers:
   - Default
   - TransparentFX
