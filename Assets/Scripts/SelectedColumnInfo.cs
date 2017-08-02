@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SelectedColumnInfo{
+public static class SelectedColumnInfo {
     //store the selected column infomation 
     private static Dictionary<string,HashSet<string>> dictionary = new Dictionary<string, HashSet<string>>();
+	private static string lastColumnName;
     /*set
         param: string:tableName string:columnName
     */
@@ -17,12 +18,30 @@ public static class SelectedColumnInfo{
         HashSet<string> columnNameSet = dictionary[tableName];
         columnNameSet.Add(columnName);
     }
+	/*set
+        param: string:tableName string:columnName
+    */
+	public static void setLastColumnName(string tableName,string columnName)
+	{
+		lastColumnName = columnName;
+	}
+
+	/*get
+        return a columnNameSet
+    */
+	public static string getLastColumnName()
+	{
+		return lastColumnName;
+	}
+
     /*get
         param: string:tableName 
         return a columnNameSet
     */
     public static HashSet<string> getColumnNameSet(string tableName)
     {
+		if (!dictionary.ContainsKey (tableName))
+			return new HashSet<string> ();
         return dictionary[tableName];
     }
     //just whether the set contains the column name
