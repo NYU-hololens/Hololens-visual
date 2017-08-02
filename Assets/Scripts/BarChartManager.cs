@@ -4,7 +4,7 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using Academy.HoloToolkit.Unity;
 
-public class DetailManage : MonoBehaviour
+public class BarChartManager : MonoBehaviour
 {
     public GameObject Detail;
     // Use this for initialization
@@ -24,12 +24,16 @@ public class DetailManage : MonoBehaviour
             return;
         }
 
+		/*
 		GameObject parent = GameObject.FindGameObjectWithTag("SphereTable1");
 		string tableName = parent.tag;
+		*/
+		/*
 		foreach(string cn in SelectedColumnInfo.getColumnNameSet(tableName))
 		{
 			 Debug.Log("here " + cn);
 		}
+		*/
 
         // Recommend having only one tagalong.
         GameObject existingDetail = GameObject.FindGameObjectWithTag("BarChart");

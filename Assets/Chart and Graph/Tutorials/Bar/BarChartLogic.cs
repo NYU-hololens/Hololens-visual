@@ -44,6 +44,5 @@ public class BarChartLogic : MonoBehaviour {
 			double.TryParse (dataSet [0] [i] [value].ToString(), out result);
 			chart.DataSource.SetValue(dataSet [0] [i][key].ToString(), "test1", result);
 		}
-        
 	}
 }
