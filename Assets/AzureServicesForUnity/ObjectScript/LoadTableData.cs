@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
+using System;
 public class LoadTableData : MonoBehaviour
 {
 
-    public DataTable Table1;
-    public DataTable Table2;
+    public static DataTable Table1;
+    public static DataTable Table2;
+    public static DataTable MergedTable;
+
 
     public const int MAX_NO_OF_ROWS = 10;
 
@@ -27,7 +30,6 @@ public class LoadTableData : MonoBehaviour
     void Start()
     {
 
-        LoadDataFromAzure();
         //LoadColumnObjects(ColumnList);
         LoadDataFromAzureTable1();
         LoadDataFromAzureTable2();
@@ -111,11 +113,13 @@ public class LoadTableData : MonoBehaviour
                 //TODO: Find a more elegant way
                 if (tableName == "Table1")
                 {
-                    gameObj.transform.Translate(1f, 0, 0);
+                    gameObj.transform.Translate(2f, 0, 0);
+                    TextHeadingObject.transform.Translate(0.1f, 0, 0);
                 }
                 else if (tableName == "Table2")
                 {
-                    gameObj.transform.Translate(-1f, 0, 0);
+                    gameObj.transform.Translate(-2f, 0, 0);
+                    TextHeadingObject.transform.Translate(-0.1f, 0, 0);
                 }
                 else
                     gameObj.transform.Translate(0, 0, 0);
@@ -128,19 +132,6 @@ public class LoadTableData : MonoBehaviour
 
     }
 
-
-    public void LoadDataFromAzure()
-    {
-        ColumnList = new List<ColumnData>();
-        ColumnList.Add(new ColumnData("ID", "String"));
-        ColumnList.Add(new ColumnData("First Name", "String"));
-        ColumnList.Add(new ColumnData("Last Name", "String"));
-        ColumnList.Add(new ColumnData("Company", "String"));
-
-        ColumnList.Add(new ColumnData("Date", "DateTime"));
-        ColumnList.Add(new ColumnData("Units Sold", "Int"));
-        ColumnList.Add(new ColumnData("Total Sales", "Int"));
-    }
 
     public void LoadDataFromAzureTable1()
     {
@@ -167,7 +158,7 @@ public class LoadTableData : MonoBehaviour
         Column1List.Add(new ColumnData("point_granularity", "INTEGER"));
 
         Table1 = new DataTable();
-        Table1.TableName = "Table No. 1";
+        Table1.TableName = "FL_insurance_data_1";
         Table1.DataColumnList.AddRange(Column1List);
 
 
@@ -192,9 +183,96 @@ public class LoadTableData : MonoBehaviour
         Column2List.Add(new ColumnData("point_granularity", "INTEGER"));
 
         Table2 = new DataTable();
-        Table2.TableName = "Table No. 2";
+        Table2.TableName = "FL_insurance_data_2";
         Table2.DataColumnList.AddRange(Column2List);
     }
+
+    public void LoadMergedTable()
+    {
+        Debug.Log("Working");
+
+        try
+        {
+
+
+            MergedTable = new DataTable();
+            MergedTable.TableName = "Common Columns";
+            MergedTable.DataColumnList = new List<ColumnData>();
+            MergedTable.DataColumnList = Table1.DataColumnList.Where(a => Table2.DataColumnList.Any(x => x.ColumnName == a.ColumnName && x.ColumnType == a.ColumnType)).ToList();
+
+
+            List<ColumnData> ColumnList = MergedTable.DataColumnList;
+            int noOfRows = MAX_NO_OF_ROWS;
+            int noOfColms = ((ColumnList.Count - 1) / noOfRows) + 1;
+            GameObject gameObj;
+
+            ObjZcoor = 0.1f;
+
+            int counter = 0;
+            int flag = 1;
+
+            GameObject TextHeadingObject = Instantiate(Resources.Load("TableHeader", typeof(GameObject))) as GameObject;
+            TextHeadingObject.transform.position = new Vector3(-0.04f, noOfRows * 0.3f, ObjZcoor);//add specified distance
+            TextHeadingObject.transform.GetComponent<TextMesh>().text = MergedTable.TableName;
+
+            
+
+            for (int i = 0; i < noOfColms; i++)
+            {
+
+                for (int j = 0; j < noOfRows; j++)
+                {
+                    if (counter == ColumnList.Count)
+                    {
+                        break;
+                    }
+                    switch (ColumnList[counter].ColumnType)
+                    {
+                        //Add more objects for different types of values
+                        case "varchar":
+                            gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject1", typeof(GameObject))) as GameObject;
+                            break;
+                        case "DATETIME":
+                            gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject2", typeof(GameObject))) as GameObject;
+                            break;
+                        case "FLOAT":
+                            gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject3", typeof(GameObject))) as GameObject;
+                            break;
+                        case "INTEGER":
+                            gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject4", typeof(GameObject))) as GameObject;
+                            break;
+                        default:
+                            gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject4", typeof(GameObject))) as GameObject;
+                            break;
+                    }
+
+                    gameObj.transform.position = new Vector3(flag * i * .9f, j * 0.3f, ObjZcoor);//add specified distance
+                    gameObj.transform.Find("ColumnNameText").GetComponent<TextMesh>().text = ColumnList[counter].ColumnName;
+                    counter++;
+
+                    //Scale down objects
+                    Vector3 tempSize;
+                    tempSize = gameObj.transform.localScale;
+                    tempSize.x = 0.8f;
+                    tempSize.y = 0.2f;
+                    tempSize.z = 0.2f;
+                    gameObj.transform.localScale = tempSize;
+
+                    //gameObj.transform.parent = parentObj.transform;
+
+                    //TODO: Find a more elegant way
+                    gameObj.transform.Translate(0, 0, 0);
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+
+        }
+    }
+
 
 
 }
