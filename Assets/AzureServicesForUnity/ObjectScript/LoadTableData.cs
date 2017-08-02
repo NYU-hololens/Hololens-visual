@@ -5,106 +5,122 @@ using UnityEngine;
 public class LoadTableData : MonoBehaviour
 {
 
-    #region Properties
-    /// <summary>
-    /// List of Columns
-    /// </summary>
+    public DataTable Table1;
+    public DataTable Table2;
+
+    public const int MAX_NO_OF_ROWS = 10;
+
+
+
     public List<ColumnData> ColumnList;
 
-    /// <summary>
-    /// X Coordinate of parent sphere
-    /// </summary>
     public float ObjXcoor;
 
-    /// <summary>
-    /// Y Coordinate of parent sphere
-    /// </summary>
     public float ObjYcoor;
 
-    /// <summary>
-    /// Z Coordinate of parent sphere
-    /// </summary>
     public float ObjZcoor;
 
-    /// <summary>
-    /// Space between each object
-    /// </summary>
     public float ObjGap;
 
-    #endregion
 
 
-    #region Public Methods
-    // Use this for initialization
     void Start()
     {
-        
+
         LoadDataFromAzure();
-        LoadColumnObjects(ColumnList);
+        //LoadColumnObjects(ColumnList);
+        LoadDataFromAzureTable1();
+        LoadDataFromAzureTable2();
+        LoadColumnObjects(Table1, "Table1");
+        LoadColumnObjects(Table2, "Table2");
+
     }
 
-    // Update is called once per frame
     void Update()
     {
 
     }
 
-    /// <summary>
-    /// Generates Objects w.r.t. column data
-    /// TODO: 1. Position Objects w.r.t. spheres
-    /// 2. Display text on each objects
-    /// </summary>
-    /// <param name="ColumnList"></param>
-    public void LoadColumnObjects(List<ColumnData> ColumnList)
+
+    public void LoadColumnObjects(DataTable table, string tableName)
     {
+        List<ColumnData> ColumnList = table.DataColumnList;
+        int noOfRows = MAX_NO_OF_ROWS;
+        int noOfColms = ((ColumnList.Count - 1) / noOfRows) + 1;
         GameObject gameObj;
         GameObject parentObj = GameObject.FindGameObjectWithTag("SphereTable1");
-        Vector3 sphere1Position= parentObj.transform.position;
-        ObjXcoor = sphere1Position.x;
+        Vector3 sphere1Position = parentObj.transform.position;
+        ObjXcoor = sphere1Position.x + 5f;
         ObjYcoor = sphere1Position.y;
-        ObjZcoor = sphere1Position.z;
+        ObjZcoor = 0.1f;//sphere1Position.z;
         ObjGap = ObjYcoor;
 
-
-        foreach (ColumnData item in ColumnList)
+        int counter = 0;
+        int flag = 1;
+        if (tableName == "Table2")
         {
-            switch (item.ColumnType)
+            flag = -1;
+        }
+
+        GameObject TextHeadingObject = Instantiate(Resources.Load("TableHeader", typeof(GameObject))) as GameObject;
+        TextHeadingObject.transform.position = new Vector3(flag * noOfColms * .5f, noOfRows * 0.3f, ObjZcoor);//add specified distance
+        TextHeadingObject.transform.GetComponent<TextMesh>().text = table.TableName;
+
+        for (int i = 0; i < noOfColms; i++)
+        {
+
+            for (int j = 0; j < noOfRows; j++)
             {
-                //Add GameObjects template in Prefab and load from there
-                case "String":
-                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
-                    //gameObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    //gameObj.GetComponent<Renderer>().material.color = Color.red;
+                if (counter == ColumnList.Count)
+                {
                     break;
+                }
+                switch (ColumnList[counter].ColumnType)
+                {
+                    //Add more objects for different types of values
+                    case "varchar":
+                        gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject1", typeof(GameObject))) as GameObject;
+                        break;
+                    case "DATETIME":
+                        gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject2", typeof(GameObject))) as GameObject;
+                        break;
+                    case "FLOAT":
+                        gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject3", typeof(GameObject))) as GameObject;
+                        break;
+                    case "INTEGER":
+                        gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject4", typeof(GameObject))) as GameObject;
+                        break;
+                    default:
+                        gameObj = Instantiate(Resources.Load("ColumnTypeObjs/ColumnObject4", typeof(GameObject))) as GameObject;
+                        break;
+                }
 
-                case "DateTime":
-                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
-                    break;
+                gameObj.transform.position = new Vector3(flag * i * .9f, j * 0.3f, ObjZcoor);//add specified distance
+                gameObj.transform.Find("ColumnNameText").GetComponent<TextMesh>().text = ColumnList[counter].ColumnName;
+                counter++;
 
-                case "Int":
-                    gameObj = Instantiate(Resources.Load("ColumnObject", typeof(GameObject))) as GameObject;
-                    break;
+                //Scale down objects
+                Vector3 tempSize;
+                tempSize = gameObj.transform.localScale;
+                tempSize.x = 0.8f;
+                tempSize.y = 0.2f;
+                tempSize.z = 0.2f;
+                gameObj.transform.localScale = tempSize;
 
-                default:
-                    gameObj = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                    break;
+
+                //TODO: Find a more elegant way
+                if (tableName == "Table1")
+                {
+                    gameObj.transform.Translate(1f, 0, 0);
+                }
+                else if (tableName == "Table2")
+                {
+                    gameObj.transform.Translate(-1f, 0, 0);
+                }
+                else
+                    gameObj.transform.Translate(0, 0, 0);
+
             }
-
-            gameObj.transform.Find("ColumnNameText").GetComponent<TextMesh>().text = item.ColumnName;
-            gameObj.transform.position = new Vector3(ObjXcoor, ObjYcoor, ObjZcoor);
-            ObjYcoor += 0.4f;
-
-
-            //Scale down objects
-            Vector3 tempSize;
-            tempSize = gameObj.transform.localScale;
-            tempSize.x = 1.5f;
-            tempSize.y = 0.2f;
-            tempSize.z = 0.2f;
-            gameObj.transform.localScale = tempSize;
-
-
-
         }
 
 
@@ -112,11 +128,7 @@ public class LoadTableData : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// Populates the column list
-    /// TODO: Load table description data from azure
-    /// Load list of columns from Azure
-    /// </summary>
+
     public void LoadDataFromAzure()
     {
         ColumnList = new List<ColumnData>();
@@ -129,15 +141,65 @@ public class LoadTableData : MonoBehaviour
         ColumnList.Add(new ColumnData("Units Sold", "Int"));
         ColumnList.Add(new ColumnData("Total Sales", "Int"));
     }
-    #endregion
+
+    public void LoadDataFromAzureTable1()
+    {
+        List<ColumnData> Column1List = new List<ColumnData>();
+        Column1List.Add(new ColumnData("policyID", "varchar"));
+        Column1List.Add(new ColumnData("CreatedAt", "DATETIME"));
+        Column1List.Add(new ColumnData("ValidUntil", "DATETIME"));
+        Column1List.Add(new ColumnData("statecode", "varchar"));
+        Column1List.Add(new ColumnData("county", "varchar"));
+        Column1List.Add(new ColumnData("eq_site_limit", "FLOAT"));
+        Column1List.Add(new ColumnData("hu_site_limit", "FLOAT"));
+        Column1List.Add(new ColumnData("fl_site_limit", "FLOAT"));
+        Column1List.Add(new ColumnData("fr_site_limit", "FLOAT"));
+        Column1List.Add(new ColumnData("tiv_2011", "INTEGER"));
+        Column1List.Add(new ColumnData("tiv_2012", "FLOAT"));
+        Column1List.Add(new ColumnData("eq_site_deductible", "FLOAT"));
+        Column1List.Add(new ColumnData("hu_site_deductible", "FLOAT"));
+        Column1List.Add(new ColumnData("fl_site_deductible", "FLOAT"));
+        Column1List.Add(new ColumnData("fr_site_deductible", "FLOAT"));
+        Column1List.Add(new ColumnData("point_latitude", "DECIMAL"));
+        Column1List.Add(new ColumnData("point_longitude", "DECIMAL"));
+        Column1List.Add(new ColumnData("line", "varchar"));
+        Column1List.Add(new ColumnData("construction", "varchar"));
+        Column1List.Add(new ColumnData("point_granularity", "INTEGER"));
+
+        Table1 = new DataTable();
+        Table1.TableName = "Table No. 1";
+        Table1.DataColumnList.AddRange(Column1List);
+
+
+    }
+
+    public void LoadDataFromAzureTable2()
+    {
+        List<ColumnData> Column2List = new List<ColumnData>();
+        Column2List.Add(new ColumnData("policyID", "varchar"));
+        Column2List.Add(new ColumnData("statecode", "varchar"));
+        Column2List.Add(new ColumnData("county", "varchar"));
+        Column2List.Add(new ColumnData("tiv_2011", "FLOAT"));
+        Column2List.Add(new ColumnData("tiv_2012", "FLOAT"));
+        Column2List.Add(new ColumnData("eq_site_deductible", "FLOAT"));
+        Column2List.Add(new ColumnData("CreatedAt", "DATETIME"));
+        Column2List.Add(new ColumnData("fl_site_deductible", "FLOAT"));
+        Column2List.Add(new ColumnData("fr_site_deductible", "FLOAT"));
+        Column2List.Add(new ColumnData("point_latitude", "DECIMAL"));
+        Column2List.Add(new ColumnData("ValidUntil", "DATETIME"));
+        Column2List.Add(new ColumnData("point_longitude", "DECIMAL"));
+        Column2List.Add(new ColumnData("construction", "varchar"));
+        Column2List.Add(new ColumnData("point_granularity", "INTEGER"));
+
+        Table2 = new DataTable();
+        Table2.TableName = "Table No. 2";
+        Table2.DataColumnList.AddRange(Column2List);
+    }
+
 
 }
 
-/// <summary>
-/// Class representing column data
-/// TODO: 1. Create Wrapper class for each table, 
-/// 2. Include properties for table description data
-/// </summary>
+
 public class ColumnData
 {
     public string ColumnName { get; set; }
@@ -147,5 +209,16 @@ public class ColumnData
         ColumnName = _columnName;
         ColumnType = _columnType;
     }
+}
+
+public class DataTable
+{
+    public string TableName { get; set; }
+    public List<ColumnData> DataColumnList { get; set; }
+    public DataTable()
+    {
+        DataColumnList = new List<ColumnData>();
+    }
+
 }
 
