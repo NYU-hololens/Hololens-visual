@@ -6,6 +6,7 @@ using System;
 public class LoadTableData : MonoBehaviour
 {
 
+    public static bool IsCommonTableEnabled = false;
     public static DataTable Table1;
     public static DataTable Table2;
     public static DataTable MergedTable;
@@ -40,7 +41,10 @@ public class LoadTableData : MonoBehaviour
 
     void Update()
     {
-
+        //if (IsCommonTableEnabled)
+        //{
+        //    Destroy(GameObject.FindWithTag("commonColumnStuff"));
+        //}
     }
 
 
@@ -189,8 +193,11 @@ public class LoadTableData : MonoBehaviour
 
     public void LoadMergedTable()
     {
-        Debug.Log("Working");
+        if (IsCommonTableEnabled)
+        {
 
+            return;
+        }
         try
         {
 
@@ -199,7 +206,6 @@ public class LoadTableData : MonoBehaviour
             MergedTable.TableName = "Common Columns";
             MergedTable.DataColumnList = new List<ColumnData>();
             MergedTable.DataColumnList = Table1.DataColumnList.Where(a => Table2.DataColumnList.Any(x => x.ColumnName == a.ColumnName && x.ColumnType == a.ColumnType)).ToList();
-
 
             List<ColumnData> ColumnList = MergedTable.DataColumnList;
             int noOfRows = MAX_NO_OF_ROWS;
@@ -214,8 +220,10 @@ public class LoadTableData : MonoBehaviour
             GameObject TextHeadingObject = Instantiate(Resources.Load("TableHeader", typeof(GameObject))) as GameObject;
             TextHeadingObject.transform.position = new Vector3(-0.04f, noOfRows * 0.3f, ObjZcoor);//add specified distance
             TextHeadingObject.transform.GetComponent<TextMesh>().text = MergedTable.TableName;
+            TextHeadingObject.transform.tag = "commonColumnStuff";
 
-            
+
+
 
             for (int i = 0; i < noOfColms; i++)
             {
@@ -265,6 +273,7 @@ public class LoadTableData : MonoBehaviour
 
                 }
             }
+            IsCommonTableEnabled = true;
         }
         catch (Exception ex)
         {
