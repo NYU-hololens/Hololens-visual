@@ -7,6 +7,7 @@ TagManager:
   - SphereTable1
   - TagAlong
   - Detail
+  - Toggle
   layers:
   - Default
   - TransparentFX
