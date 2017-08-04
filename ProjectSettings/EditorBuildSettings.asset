@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/DemoScene.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/AzureServicesForUnity/_Demo Scenes/WelcomScene.unity
+    path: Assets/AzureServicesForUnity/_Demo Scenes/WelcomeScene.unity
     guid: baa581e256694bb40aa98f8fd0f2c62e
   - enabled: 1
     path: Assets/AzureServicesForUnity/_Demo Scenes/AppServiceDemo.unity
