@@ -6,6 +6,7 @@ public static class SelectedColumnInfo {
     //store the selected column infomation 
     private static Dictionary<string,HashSet<string>> dictionary = new Dictionary<string, HashSet<string>>();
 	private static string lastColumnName;
+    private static string lastTableName;
     /*set
         param: string:tableName string:columnName
     */
@@ -21,10 +22,11 @@ public static class SelectedColumnInfo {
 	/*set
         param: string:tableName string:columnName
     */
-	public static void setLastColumnName(string tableName,string columnName)
+	public static void setLastColumnAttr(string tableName,string columnName)
 	{
 		lastColumnName = columnName;
-	}
+        lastTableName = tableName;
+    }
 
 	/*get
         return a columnNameSet
@@ -33,6 +35,14 @@ public static class SelectedColumnInfo {
 	{
 		return lastColumnName;
 	}
+
+    /*get
+    return a columnNameSet
+    */
+    public static string getLastTableName()
+    {
+        return lastTableName;
+    }
 
     /*get
         param: string:tableName 

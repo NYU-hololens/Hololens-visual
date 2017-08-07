@@ -61,7 +61,7 @@ public class LoadTableData : MonoBehaviour
         int noOfRows = MAX_NO_OF_ROWS;
         int noOfColms = ((ColumnList.Count - 1) / noOfRows) + 1;
         GameObject gameObj;
-        GameObject parentObj = GameObject.FindGameObjectWithTag("SphereTable1");
+        GameObject parentObj = GameObject.FindGameObjectWithTag("Table1");
         Vector3 sphere1Position = parentObj.transform.position;
         ObjXcoor = sphere1Position.x + 5f;
         ObjYcoor = sphere1Position.y;
@@ -323,5 +323,13 @@ public class DataTable
         DataColumnList = new List<ColumnData>();
     }
 
+    public string GetColumnType(string TargetColumnName) {
+        for (int i = 0; i < DataColumnList.Count; i++)
+        {
+            if (DataColumnList[i].ColumnName == TargetColumnName)
+                return DataColumnList[i].ColumnType;
+        }
+        return "";
+    }
 }
 
