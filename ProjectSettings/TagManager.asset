@@ -13,6 +13,8 @@ TagManager:
   - BarChartManager
   - BubbleChart
   - GraphChartManager
+  - Table1
+  - Table2
   layers:
   - Default
   - TransparentFX
