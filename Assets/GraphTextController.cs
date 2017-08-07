@@ -14,15 +14,25 @@ public class GraphTextController : MonoBehaviour {
 	public DateTime start_time = new DateTime(2017,1,1);
 	public DateTime end_time = new DateTime(2017,8,11);
 
+    
+
     void Start() {
+        Debug.Log("HERE");
+        col_name = SelectedColumnInfo.getLastColumnName();
+        table_name = LoadTableData.Table1.TableName;
+        col_type = LoadTableData.Table1.GetColumnType(col_name);
+        Debug.Log(table_name);
+        Debug.Log(col_name);
+        Debug.Log(col_type);
+
         string text = "";
-        if (col_type == "float" || col_type == "intger" || col_type == "INTEGER" || col_type == "FLOAT")
+        if (col_type == "DECIMAL" || col_type == "intger" || col_type == "INTEGER" || col_type == "FLOAT")
         {
             TextMeshPro textmeshPro = GetComponent<TextMeshPro>();
             text = string.Format("{0}, <{1}>, {2}\n No. of distinct values: {3:0}\n Distribution(Grouped):", col_name, col_type, table_name, distinct_values);
             textmeshPro.SetText(text);
         }
-        else if (col_type == "string" || col_type == "var_char")
+        else if (col_type == "string" || col_type == "var_char" || col_type == "varchar")
         {
             TextMeshPro textmeshPro = GetComponent<TextMeshPro>();
             text = string.Format("{0}, <{1}>, {2}\n No. of distinct values: {3:0}\n Distribution:", col_name, col_type, table_name, distinct_values);

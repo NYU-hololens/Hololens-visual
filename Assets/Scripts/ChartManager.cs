@@ -43,7 +43,7 @@ public class ChartManager : MonoBehaviour
         */
 
 
-		GameObject parent = GameObject.FindGameObjectWithTag("SphereTable1");
+		GameObject parent = GameObject.FindGameObjectWithTag("Table1");
 		string tableName = parent.tag;
 		// Debug.Log("last highlighted column: " + SelectedColumnInfo.getLastColumnName());
 		/*
