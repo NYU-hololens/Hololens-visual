@@ -68,6 +68,12 @@ namespace HoloToolkit.Unity.InputModule
         private IInputSource currentInputSource = null;
         private uint currentInputSourceId;
 
+        private static bool dragState;
+        public static bool getDraggingState()
+        {
+            return dragState;
+        }
+        
         private void Start()
         {
             if (HostTransform == null)
@@ -76,6 +82,10 @@ namespace HoloToolkit.Unity.InputModule
             }
 
             mainCamera = Camera.main;
+
+            Collide collide;
+            collide = gameObject.GetComponent<Collide>();
+            if(collide != null) collide.enabled = false;
         }
 
         private void OnDestroy()
@@ -104,6 +114,7 @@ namespace HoloToolkit.Unity.InputModule
         /// </summary>
         public void StartDragging()
         {
+            
             if (!IsDraggingEnabled)
             {
                 return;
@@ -114,10 +125,15 @@ namespace HoloToolkit.Unity.InputModule
                 return;
             }
 
+            Collide collide;
+            collide = gameObject.GetComponent<Collide>();
+            collide.enabled = true;
+
             // Add self as a modal input handler, to get all inputs during the manipulation
             InputManager.Instance.PushModalInputHandler(gameObject);
 
             isDragging = true;
+            dragState = true;
             //GazeCursor.Instance.SetState(GazeCursor.State.Move);
             //GazeCursor.Instance.SetTargetObject(HostTransform);
 
@@ -243,10 +259,13 @@ namespace HoloToolkit.Unity.InputModule
                 return;
             }
 
+            
+
             // Remove self as a modal input handler
             InputManager.Instance.PopModalInputHandler();
 
             isDragging = false;
+            dragState = false;
             currentInputSource = null;
             StoppedDragging.RaiseEvent();
         }

@@ -6,10 +6,11 @@ using System;
 public class LoadTableData : MonoBehaviour
 {
 
+    public static bool IsCommonTableEnabled = false;
     public static DataTable Table1;
     public static DataTable Table2;
     public static DataTable MergedTable;
-
+    GameObject Torus3DObj;
 
     public const int MAX_NO_OF_ROWS = 10;
 
@@ -35,17 +36,27 @@ public class LoadTableData : MonoBehaviour
         LoadDataFromAzureTable2();
         LoadColumnObjects(Table1, "Table1");
         LoadColumnObjects(Table2, "Table2");
+        //GameObject.Find("Torus3D").SetActive(false);
+        //Instantiate(Resources.Load("Torus3D", typeof(GameObject)));
+
+
+
 
     }
 
     void Update()
     {
-
+        //if (IsCommonTableEnabled)
+        //{
+        //    Destroy(GameObject.FindWithTag("commonColumnStuff"));
+        //}
     }
 
 
     public void LoadColumnObjects(DataTable table, string tableName)
     {
+
+
         List<ColumnData> ColumnList = table.DataColumnList;
         int noOfRows = MAX_NO_OF_ROWS;
         int noOfColms = ((ColumnList.Count - 1) / noOfRows) + 1;
@@ -189,17 +200,24 @@ public class LoadTableData : MonoBehaviour
 
     public void LoadMergedTable()
     {
-        Debug.Log("Working");
-
+        if (IsCommonTableEnabled)
+        {
+            //GameObject.FindGameObjectWithTag("commonColumnStuff").SetActive(false);
+            //foreach (var item in commonColumnStuffList)
+            //{
+            //    item.SetActive(false);
+            //}
+            return;
+        }
         try
         {
+            
 
 
             MergedTable = new DataTable();
             MergedTable.TableName = "Common Columns";
             MergedTable.DataColumnList = new List<ColumnData>();
             MergedTable.DataColumnList = Table1.DataColumnList.Where(a => Table2.DataColumnList.Any(x => x.ColumnName == a.ColumnName && x.ColumnType == a.ColumnType)).ToList();
-
 
             List<ColumnData> ColumnList = MergedTable.DataColumnList;
             int noOfRows = MAX_NO_OF_ROWS;
@@ -214,8 +232,10 @@ public class LoadTableData : MonoBehaviour
             GameObject TextHeadingObject = Instantiate(Resources.Load("TableHeader", typeof(GameObject))) as GameObject;
             TextHeadingObject.transform.position = new Vector3(-0.04f, noOfRows * 0.3f, ObjZcoor);//add specified distance
             TextHeadingObject.transform.GetComponent<TextMesh>().text = MergedTable.TableName;
+            TextHeadingObject.transform.tag = "commonColumnStuff";
 
-            
+
+
 
             for (int i = 0; i < noOfColms; i++)
             {
@@ -262,9 +282,14 @@ public class LoadTableData : MonoBehaviour
 
                     //TODO: Find a more elegant way
                     gameObj.transform.Translate(0, 0, 0);
+                    gameObj.transform.tag = "commonColumnStuff";
+
 
                 }
             }
+            IsCommonTableEnabled = true;
+            GameObject.Find("Torus3D").transform.position = new Vector3(0, -0.4f, 0);
+
         }
         catch (Exception ex)
         {
