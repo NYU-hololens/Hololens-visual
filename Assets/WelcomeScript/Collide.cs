@@ -13,11 +13,15 @@ public class Collide : MonoBehaviour {
     private float speed = 0.2f;
     private float xx, yy, zz;
     private static bool isCollided = false;
+    private float similarity;
     // Use this for initialization
     private bool isTriggered;
 	void Start () {
         Debug.Log(x + " " + y + " " + z);
         isTriggered = false;
+        if (gameObject.tag == "100") similarity = 1.0f;
+        else if (gameObject.tag == "50") similarity = .5f;
+        else similarity = .0f;
         
     }
 	
@@ -33,7 +37,7 @@ public class Collide : MonoBehaviour {
     void OnTriggerEnter(Collider collider)
     {
         isOver = false;
-        float similarity = 0.6f;
+        
         isTriggered = true;
         x = gameObject.GetComponent<Transform>().position.x;
         y = gameObject.GetComponent<Transform>().position.y;
