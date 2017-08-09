@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/DemoScene.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/AzureServicesForUnity/_Demo Scenes/ARcubes.unity
+    guid: d894d31adcba7aa45959c82d2a53e7f8
+  - enabled: 1
     path: Assets/AzureServicesForUnity/_Demo Scenes/WelcomeScene.unity
     guid: baa581e256694bb40aa98f8fd0f2c62e
   - enabled: 1
