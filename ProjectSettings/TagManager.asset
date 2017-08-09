@@ -15,6 +15,9 @@ TagManager:
   - GraphChartManager
   - Table1
   - Table2
+  - 100
+  - 50
+  - 0
   layers:
   - Default
   - TransparentFX
