@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1287,7 +1287,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 611917382}
-  m_Text: Dataset6
+  m_Text: Loan Info
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -1597,7 +1597,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 755009526}
-  m_Text: Dataset5
+  m_Text: Loan Mod
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -1680,12 +1680,12 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 820447564}
-  m_Text: Dataset3
+  m_Text: CSSA Loan
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
   m_Anchor: 0
-  m_Alignment: 0
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
@@ -2035,7 +2035,9 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1021255126}
-  m_Text: Dataset4
+  m_Text: 'CSSI Loan
+
+'
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -2469,7 +2471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RecognizerStart: 0
   KeywordsAndResponses:
-  - Keyword: Show Me Difference Detail
+  - Keyword: Show Me Details
     KeyCode: 261
     Response:
       m_PersistentCalls:
@@ -3477,7 +3479,9 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1914997268}
-  m_Text: Dataset1
+  m_Text: 'Allocated Loans
+
+'
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
@@ -3641,7 +3645,9 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2113690037}
-  m_Text: Dataset2
+  m_Text: 'Loan Loss Provision
+
+'
   m_OffsetZ: 0
   m_CharacterSize: 0.1
   m_LineSpacing: 1
