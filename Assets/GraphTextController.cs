@@ -29,12 +29,14 @@ public class GraphTextController : MonoBehaviour {
         if (col_type == "DECIMAL" || col_type == "intger" || col_type == "INTEGER" || col_type == "FLOAT")
         {
             TextMeshPro textmeshPro = GetComponent<TextMeshPro>();
+            distinct_values = 456866;
             text = string.Format("{0}, <{1}>, {2}\n No. of distinct values: {3:0}\n Distribution(Grouped):", col_name, col_type, table_name, distinct_values);
             textmeshPro.SetText(text);
         }
         else if (col_type == "string" || col_type == "var_char" || col_type == "varchar")
         {
             TextMeshPro textmeshPro = GetComponent<TextMeshPro>();
+            distinct_values = 9865;
             text = string.Format("{0}, <{1}>, {2}\n No. of distinct values: {3:0}\n Distribution:", col_name, col_type, table_name, distinct_values);
             textmeshPro.SetText(text);
         }
