@@ -45,7 +45,7 @@ public class BarChartManage : MonoBehaviour
 
         GameObject instantiatedDetail = GameObject.Instantiate(Detail);
 		//instantiatedDetail.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.85f;
-		instantiatedDetail.transform.position = Camera.main.transform.position - Camera.main.transform.right * 0.75f - Camera.main.transform.up * 0.3f + Camera.main.transform.forward * 2.3f;
+		instantiatedDetail.transform.position = Camera.main.transform.position - Camera.main.transform.right * 0.75f - Camera.main.transform.up * 0.6f + Camera.main.transform.forward * 2.3f;
         instantiatedDetail.SetActive(true);
         instantiatedDetail.AddComponent<Billboard>();
         instantiatedDetail.AddComponent<SimpleTagalong>();
