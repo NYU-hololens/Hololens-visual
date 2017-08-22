@@ -169,7 +169,7 @@ public class LoadTableData : MonoBehaviour
         Column1List.Add(new ColumnData("point_granularity", "INTEGER"));
 
         Table1 = new DataTable();
-        Table1.TableName = "FL_insurance_data_1";
+        Table1.TableName = "CSSA Loans";
         Table1.DataColumnList.AddRange(Column1List);
 
 
@@ -194,7 +194,7 @@ public class LoadTableData : MonoBehaviour
         Column2List.Add(new ColumnData("point_granularity", "INTEGER"));
 
         Table2 = new DataTable();
-        Table2.TableName = "FL_insurance_data_2";
+        Table2.TableName = "CSSI Loans";
         Table2.DataColumnList.AddRange(Column2List);
     }
 
