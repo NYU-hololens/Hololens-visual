@@ -13,7 +13,7 @@ The second and the entry scene to our main application is the WelcomeScene. Here
 This this the final and most important scene of the application. Here the user can see all the column details of the two datasets.
 
 ## How to Deploy
-1. *Export to the Visual Studio solution*
+**1. Export to the Visual Studio solution**
 ```
 Open File > Build Settings window.
 Click Add Open Scenes to add the scene.
@@ -31,13 +31,13 @@ Open the App folder in file explorer.
 Open the generated Visual Studio solution
 ```
 
-2. *Compile the Visual Studio solution*
+**2. Compile the Visual Studio solution**
 ```
 Using the top toolbar in Visual Studio, change the target from Debug to Release and from ARM to X86.
 The instructions differ for deploying to a device versus the emulator. Follow the instructions that match your setup.
 ```
 
-3. *Deploy to mixed reality device over Wi-Fi*
+**3. Deploy to mixed reality device over Wi-Fi**
 ```
 Click on the arrow next to the Local Machine button, and change the deployment target to Remote Machine.
 Enter the IP address of your mixed reality device and change Authentication Mode to Universal (Unencrypted Protocol) for HoloLens and Windows for other devices.
@@ -45,7 +45,7 @@ Click Debug > Start without debugging.
 For HoloLens, If this is the first time deploying to your device, you will need to pair Using Visual Studio.
 ```
 
-4. *Deploy to mixed reality device over USB*
+**4. Deploy to mixed reality device over USB**
 ```
 Ensure you device is plugged in via the USB cable.
 For HoloLens, click on the arrow next to the Local Machine button, and change the deployment target to Device.
@@ -53,7 +53,7 @@ For targeting occluded devices attached to your PC, keep the setting to Local Ma
 Click Debug > Start without debugging.
 ```
 
-5. *Deploy to Emulator*
+**5. Deploy to Emulator**
 ```
 Click on the arrow next to the Device button, and from drop down select HoloLens Emulator.
 Click Debug > Start without debugging.
