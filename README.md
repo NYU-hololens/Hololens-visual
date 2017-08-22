@@ -24,7 +24,7 @@ UWP Build Type should be D3D.
 UWP SDK could be left at Latest installed.
 Check Unity C# Projects under Debugging.
 Click Build.
-In the file explorer, click New Folder and name the folder "App".
+In the file explorer, click New Folder and name the folder "Apps".
 With the App folder selected, click the Select Folder button.
 When Unity is done building, a Windows File Explorer window will appear.
 Open the App folder in file explorer.
