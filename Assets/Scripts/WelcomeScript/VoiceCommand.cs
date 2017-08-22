@@ -22,4 +22,9 @@ public class VoiceCommand : MonoBehaviour {
             SceneManager.LoadScene("AppServiceDemo");
         }
     }
+
+    public void ARtoWelcomeScene()
+    {
+        SceneManager.LoadScene("WelcomeScene");
+    }
 }
